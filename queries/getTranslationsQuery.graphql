@@ -1,0 +1,11 @@
+query getLiveProgramPhase($id: String!) {
+    resource(id: $id) {
+        id
+        translations {
+            id
+        }
+        master {
+            id
+        }
+    }
+}

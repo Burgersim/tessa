@@ -1,0 +1,289 @@
+query getLiveProgramPhase($id: String!) {
+    resource(id: $id) {
+        id
+        type
+        title {
+            text
+        }
+        teaser {
+            text
+        }
+        meta {
+            locale
+            spaces
+            published
+        }
+        subHeading {
+            text
+        }
+        master {
+            id
+        }
+        usageRestrictions
+        publishedDate {
+            dateTimeUTC
+        }
+        ... on EventProfile {
+            live {
+                title {
+                    text
+                }
+                id
+            }
+            series {
+                title {
+                    text
+                }
+                id
+            }
+            season {
+                title {
+                    text
+                }
+                id
+            }
+            status
+            description {
+                ... on AttributeTextualArtefactContainer {
+                    contents {
+                        ... on AttributeText {
+                            text
+                        }
+                    }
+                }
+            }
+            startDate {
+                dateTimeUTC
+            }
+            endDate {
+                dateTimeUTC
+            }
+        }
+        ... on LiveVideo {
+            events {
+                title {
+                    text
+                }
+                id
+            }
+            status
+            videoEssence {
+                attributes
+            }
+            description {
+                ... on AttributeTextualArtefactContainer {
+                    contents {
+                        ... on AttributeText {
+                            text
+                        }
+                    }
+                }
+            }
+            startDate {
+                dateTimeUTC
+            }
+            endDate {
+                dateTimeUTC
+            }
+        }
+        ... on EventSeries {
+            events {
+                title {
+                    text
+                }
+                id
+            }
+            description {
+                ... on AttributeTextualArtefactContainer {
+                    contents {
+                        ... on AttributeText {
+                            text
+                        }
+                    }
+                }
+            }
+            startDate {
+                dateTimeUTC
+            }
+            endDate {
+                dateTimeUTC
+            }
+        }
+        ... on EventSeason {
+            events {
+                title {
+                    text
+                }
+                id
+            }
+            description {
+                ... on AttributeTextualArtefactContainer {
+                    contents {
+                        ... on AttributeText {
+                            text
+                        }
+                    }
+                }
+            }
+        },
+        ... on Season {
+            episodes {
+                title {
+                    text
+                }
+                id
+            }
+            show {
+                title {
+                    text
+                }
+                id
+            }
+            description {
+                ... on AttributeTextualArtefactContainer {
+                    contents {
+                        ... on AttributeText {
+                            text
+                        }
+                    }
+                }
+            }
+        },
+        ... on Video{
+            extraFor {
+                title {
+                    text
+                }
+                id
+            }
+            videoEssence {
+                attributes
+            }
+            description {
+                ... on AttributeTextualArtefactContainer {
+                    contents {
+                        ... on AttributeText {
+                            text
+                        }
+                    }
+                }
+            }
+        },
+        ... on Film {
+            videoEssence {
+                attributes
+            }
+            description {
+                ... on AttributeTextualArtefactContainer {
+                    contents {
+                        ... on AttributeText {
+                            text
+                        }
+                    }
+                }
+            }
+        },
+        ... on RecapVideo {
+            extraFor {
+                title {
+                    text
+                }
+                id
+            }
+            videoEssence {
+                attributes
+            }
+            description {
+                ... on AttributeTextualArtefactContainer {
+                    contents {
+                        ... on AttributeText {
+                            text
+                        }
+                    }
+                }
+            }
+        },
+        ... on Video360{
+            videoEssence {
+                attributes
+            }
+            description {
+                ... on AttributeTextualArtefactContainer {
+                    contents {
+                        ... on AttributeText {
+                            text
+                        }
+                    }
+                }
+            }
+        },
+        ... on VideoResource {
+            description {
+                ... on AttributeTextualArtefactContainer {
+                    contents {
+                        ... on AttributeText {
+                            text
+                        }
+                    }
+                }
+            }
+        },
+        ...on EpisodeVideo {
+            season {
+                title {
+                    text
+                }
+                id
+            }
+            videoEssence {
+                attributes
+            }
+            description {
+                ... on AttributeTextualArtefactContainer {
+                    contents {
+                        ... on AttributeText {
+                            text
+                        }
+                    }
+                }
+            }
+        },
+        ... on Show {
+            seasons {
+                title {
+                    text
+                }
+                id
+            }
+            description {
+                ... on AttributeTextualArtefactContainer {
+                    contents {
+                        ... on AttributeText {
+                            text
+                        }
+                    }
+                }
+            }
+        }
+        ... on TrailerVideo {
+            extraFor {
+                title {
+                    text
+                }
+                id
+            }
+            videoEssence {
+                attributes
+            }
+            description {
+                ... on AttributeTextualArtefactContainer {
+                    contents {
+                        ... on AttributeText {
+                            text
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

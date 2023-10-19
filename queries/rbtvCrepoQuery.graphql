@@ -1,0 +1,193 @@
+# noinspection GraphQLUnresolvedReference,GraphQLSchemaValidation
+query getPAS($cutoffDate: String!) {
+    feed(
+        query: "/v3/query/?filter[type]=films,shows,seasons,event-series,event-seasons,event-profiles,trailer-videos,episode-videos,recap-videos,live-videos,videos-360,videos&sort=-publishedDate&spaces=rbtv&page[limit]=100",
+        filter: {publishedDate: {gte: $cutoffDate}}
+    ) {
+        edges {
+            node {
+                id,
+                type,
+                geoBlockedIn,
+                uriSlug,
+                meta {
+                    language,
+                    region,
+                    locale
+                }
+                title {
+                    text
+                },
+                subHeading {
+                    text
+                },
+                teaser {
+                    text
+                },
+                publishedDate {
+                    dateTimeUTC
+                },
+                featuredMedia{
+                    ... on PreviewClip{
+                        id
+                    }
+                }
+                ... on EventSeason {
+                    description {
+                        contents {
+                            ... on AttributeText {
+                                text
+                            }
+                        }
+                    },
+                    label
+                },
+                ... on EventSeries {
+                    description {
+                        contents {
+                            ... on AttributeText {
+                                text
+                            }
+                        }
+                    }
+                },
+                ... on EventProfile {
+                    description {
+                        contents {
+                            ... on AttributeText {
+                                text
+                            }
+                        }
+                    },
+                    label
+                },
+                ... on Season {
+                    label
+                },
+                ... on ContentCollection {
+                    label
+                },
+                ... on Tag {
+                    label
+                },
+                ... on Video{
+                    videoEssence {
+                        attributes
+                    },
+                    description {
+                        contents {
+                            ... on AttributeText {
+                                text
+                            }
+                        }
+                    }
+                },
+                ... on Film {
+                    videoEssence {
+                        attributes
+                    },
+                    description {
+                        contents {
+                            ... on AttributeText {
+                                text
+                            }
+                        }
+                    }
+                },
+                ... on RecapVideo {
+                    videoEssence {
+                        attributes
+                    },
+                    description {
+                        contents {
+                            ... on AttributeText {
+                                text
+                            }
+                        }
+                    }
+                },
+                ... on Video360{
+                    videoEssence {
+                        attributes
+                    },
+                    description {
+                        contents {
+                            ... on AttributeText {
+                                text
+                            }
+                        }
+                    }
+                },
+                ... on LiveVideo {
+                    videoEssence {
+                        attributes
+                    },
+                    description {
+                        contents {
+                            ... on AttributeText {
+                                text
+                            }
+                        }
+                    }
+                }
+                ... on VideoResource {
+                    videoEssence {
+                        attributes
+                    },
+                    description {
+                        contents {
+                            ... on AttributeText {
+                                text
+                            }
+                        }
+                    }
+                },
+                ...on EpisodeVideo {
+                    videoEssence {
+                        attributes
+                    },
+                    description {
+                        contents {
+                            ... on AttributeText {
+                                text
+                            }
+                        }
+                    }
+                },
+                ... on Film {
+                    videoEssence {
+                        attributes
+                    },
+                    description {
+                        contents {
+                            ... on AttributeText {
+                                text
+                            }
+                        }
+                    }
+                },
+                ... on RecapVideo {
+                    videoEssence {
+                        attributes
+                    },
+                    description {
+                        contents {
+                            ... on AttributeText {
+                                text
+                            }
+                        }
+                    }
+                },
+                ... on Show {
+                    description {
+                        contents {
+                            ... on AttributeText {
+                                text
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

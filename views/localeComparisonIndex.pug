@@ -1,0 +1,113 @@
+extends ../node_modules/jade-bootstrap/layouts/bootswatch
+append styles
+    link(href=`../css/rbtv.css`, rel='stylesheet')
+block body
+    .container(style="text-align: center;")
+        h1= title
+        p To start the Asset import enter a valid Asset Id into the field below and then click the button
+        p(id='time')= ""
+        form.form-group
+            label(for="assetId")= "Asset Id"
+            input(type="text", id="assetId").form-control
+            a(onclick="getAssets()", id='button')
+                if(mode === 'rbtvLocales' || mode === "rbtvLocalesHierarchy")
+                    div(class='btn btn-danger btn-lg ld-ext-right running', id='importButton')= "Start Asset Import"
+            a(onclick="getAssetsHierarchy()", id='button2')
+                if(mode === 'rbtvLocales' || mode === "rbtvLocalesHierarchy")
+                    div(class='btn btn-danger btn-lg ld-ext-right running', id='importButton2')= "Start Asset Import with ALL Children"
+    script.
+        let mode = '#{mode}'
+        let syncInProgress = false;
+
+        async function getAssetsHierarchy() {
+
+            mode = "rbtvLocalesHierarchy"
+            let assetId = document.getElementById('assetId').value
+
+            console.log(assetId)
+            console.log(mode)
+
+            if (assetId === undefined || assetId === "") {
+                let time = "no ID given"
+
+                if (mode === 'rbtvLocalesHierarchy')
+                    document.getElementById('time').innerHTML = `<div class="alert alert-success" role="alert" style="background-color: #f8f8f8; border-color: #b6b6b6; color: #1A1919 !important;">${time}</div>`
+
+                document.getElementById('importButton2').innerHTML = `Done`
+                document.getElementById('importButton2').setAttribute('disabled', 'true')
+                document.getElementById('button2').setAttribute('onclick', 'javascript: void(0)')
+
+            } else {
+
+                syncInProgress = true;
+
+                document.getElementById('importButton2').innerHTML = `Loading... <div class="ld ld-ring ld-spin""></div>`
+
+
+                await fetch('/request?mode=' + mode + '&assetId=' + assetId.trim(), {
+                    method: 'get',
+                    keepalive: true
+                }).then(res => res.json()).then(res => {
+
+                    if (mode === 'rbtvLocalesHierarchy')
+                        document.getElementById('time').innerHTML = `<div class="alert alert-success" role="alert" style="background-color: #f8f8f8; border-color: #b6b6b6; color: #1A1919 !important;">${res}</div>`
+
+                    document.getElementById('importButton2').innerHTML = `Done`
+                    document.getElementById('importButton2').setAttribute('disabled', 'true')
+                    document.getElementById('button2').setAttribute('onclick', 'javascript: void(0)')
+
+
+                })
+            }
+        }
+
+        async function getAssets() {
+
+            let assetId = document.getElementById('assetId').value
+
+            console.log(assetId)
+            console.log(mode)
+
+            if (assetId === undefined || assetId === "") {
+                let time = "no ID given"
+
+                if (mode === 'rbtvLocales')
+                    document.getElementById('time').innerHTML = `<div class="alert alert-success" role="alert" style="background-color: #f8f8f8; border-color: #b6b6b6; color: #1A1919 !important;">${time}</div>`
+
+                document.getElementById('importButton').innerHTML = `Done`
+                document.getElementById('importButton').setAttribute('disabled', 'true')
+                document.getElementById('button').setAttribute('onclick', 'javascript: void(0)')
+
+            } else {
+
+                syncInProgress = true;
+
+                document.getElementById('importButton').innerHTML = `Loading... <div class="ld ld-ring ld-spin""></div>`
+
+
+                await fetch('/request?mode=' + mode + '&assetId=' + assetId.trim(), {
+                    method: 'get',
+                    keepalive: true
+                }).then(res => res.json()).then(res => {
+
+                    if (mode === 'rbtvLocales')
+                        document.getElementById('time').innerHTML = `<div class="alert alert-success" role="alert" style="background-color: #f8f8f8; border-color: #b6b6b6; color: #1A1919 !important;">${res}</div>`
+
+                    document.getElementById('importButton').innerHTML = `Done`
+                    document.getElementById('importButton').setAttribute('disabled', 'true')
+                    document.getElementById('button').setAttribute('onclick', 'javascript: void(0)')
+
+
+                })
+            }
+
+            setTimeout(() => {
+                document.getElementById('time').innerHTML = ` `
+                document.getElementById('importButton').innerHTML = `Start Asset Import`
+                document.getElementById('button').setAttribute('onclick', 'getAssets()')
+                document.getElementById('importButton').removeAttribute('disabled')
+
+                document.getElementById('assetId').value = ""
+            }, 9000);
+
+        }
